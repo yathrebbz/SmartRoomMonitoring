@@ -1,6 +1,26 @@
+# Environnements
 venv/
+.venv/
+.env
+
+# Python
 __pycache__/
 *.pyc
-.env
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Modèles entraînés (exportés par notebooks/smart_room_modeling.ipynb)
 *.pkl
 *.joblib
+
+# Frontend
+node_modules/
+frontend/dist/
+*.local
+
+# IDE / outils / OS
+.vscode/
+.idea/
+.impeccable/
+.DS_Store
+Thumbs.db
