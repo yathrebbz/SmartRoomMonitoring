@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ------------------------------------------------------------------ */
+/* Jetons sémantiques — le thème sombre est dessiné, pas inversé.      */
+/* ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+
+  --bg: #f3f5f9;
+  --surface: #ffffff;
+  --surface-2: #f6f8fb;
+  --border: #e3e8f0;
+  --border-strong: #c9d2e0;
+
+  --fg: #0f172a;
+  --fg-muted: #56657f;
+  --fg-faint: #8592a8;
+
+  --brand: #2a78d6;
+  --brand-fg: #ffffff;
+  --brand-soft: rgba(42, 120, 214, 0.12);
+
+  --good: #0ca30c;
+  --good-fg: #0b6b0b;
+  --good-soft: rgba(12, 163, 12, 0.13);
+  --warn: #fab219;
+  --warn-fg: #7f5200;
+  --warn-soft: rgba(250, 178, 25, 0.18);
+  --bad: #d03b3b;
+  --bad-fg: #a62c2c;
+  --bad-soft: rgba(208, 59, 59, 0.12);
+
+  --series-1: #2a78d6;
+  --series-ref: #8a877f;
+  --grid: #e6e5df;
+  --axis: #c3c2b7;
+
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.08);
+  --ring: rgba(42, 120, 214, 0.35);
+  --glow: rgba(42, 120, 214, 0.1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0b0f17;
+  --surface: #121927;
+  --surface-2: #182234;
+  --border: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.3);
+
+  --fg: #e8edf6;
+  --fg-muted: #9aa8bf;
+  --fg-faint: #6f7d95;
+
+  --brand: #3987e5;
+  --brand-fg: #ffffff;
+  --brand-soft: rgba(57, 135, 229, 0.18);
+
+  --good: #0ca30c;
+  --good-fg: #63d663;
+  --good-soft: rgba(12, 163, 12, 0.16);
+  --warn: #fab219;
+  --warn-fg: #ffc94d;
+  --warn-soft: rgba(250, 178, 25, 0.16);
+  --bad: #d03b3b;
+  --bad-fg: #f58080;
+  --bad-soft: rgba(208, 59, 59, 0.18);
+
+  --series-1: #3987e5;
+  --series-ref: #8a877f;
+  --grid: #253043;
+  --axis: #34405a;
+
+  --shadow-card: none;
+  --ring: rgba(57, 135, 229, 0.45);
+  --glow: rgba(57, 135, 229, 0.16);
+}
+
+@theme inline {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-faint: var(--fg-faint);
+  --color-brand: var(--brand);
+  --color-brand-fg: var(--brand-fg);
+  --color-brand-soft: var(--brand-soft);
+  --color-good: var(--good);
+  --color-good-fg: var(--good-fg);
+  --color-good-soft: var(--good-soft);
+  --color-warn: var(--warn);
+  --color-warn-fg: var(--warn-fg);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad: var(--bad);
+  --color-bad-fg: var(--bad-fg);
+  --color-bad-soft: var(--bad-soft);
+
+  --shadow-card: var(--shadow-card);
+  --radius-card: 14px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--fg);
+    touch-action: manipulation;
+  }
+
+  /* Halo discret en haut de page, façon salle de contrôle. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(70% 45% at 50% -10%, var(--glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--brand-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Curseurs des capteurs                                               */
+/* ------------------------------------------------------------------ */
+
+input[type="range"].slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--brand) 0 var(--fill, 0%),
+    var(--border-strong) var(--fill, 0%) 100%
+  );
+  cursor: pointer;
+}
+
+input[type="range"].slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--brand);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 150ms ease-out;
+}
+
+input[type="range"].slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--brand);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 150ms ease-out;
+}
+
+input[type="range"].slider:active::-webkit-slider-thumb,
+input[type="range"].slider:hover::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+
+input[type="range"].slider:focus-visible {
+  outline-offset: 6px;
+}
+
+/* Barre de défilement fine pour le panneau latéral. */
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+/* Pulsation douce du point de présence. */
+@keyframes presence-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.presence-ping {
+  animation: presence-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
